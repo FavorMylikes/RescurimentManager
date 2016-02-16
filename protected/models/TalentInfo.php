@@ -38,6 +38,7 @@ class TalentInfo extends CActiveRecord
 		return array(
 			array('name,age,work_age,gender,recruitment_type,way,mobile_telephone_number,email,department_id,position','required','message'=>'{attribute}不能为空'),
             array('email','email'),
+            array('mobile_telephone_number','unique','message'=>'存在同号的人'),
             array('mobile_telephone_number','length','is'=>11,'message'=>'请输入正确的手机号码'),
             array('qq_number','length','min'=>5,'max'=>12,'tooShort'=>'哪有这么短的QQ','tooLong'=>'哪有这么长的QQ'),
             array('age','numerical','integerOnly'=>true,'max'=>70,'min'=>18,'tooBig'=>'年龄太大','tooSmall'=>'不用童工'),
@@ -248,7 +249,7 @@ class TalentInfo extends CActiveRecord
             }
         }
     }
-    public function isIntern(&$criteria){//是否实习生
+    public function isIntern(){//是否实习生
         $user=User::model()->findByAttributes(array('user_name'=>Yii::app()->user->name));
         if(!empty($user)){
             if( in_array($user->id,$this::$intern)){
