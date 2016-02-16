@@ -38,7 +38,7 @@ class TalentInfo extends CActiveRecord
 		return array(
 			array('name,age,work_age,gender,recruitment_type,way,mobile_telephone_number,email,department_id,position','required','message'=>'{attribute}不能为空'),
             array('email','email'),
-            array('mobile_telephone_number','unique','message'=>'存在同号的人'),
+            array('mobile_telephone_number,qq_number','unique','message'=>'存在同号的人'),
             array('mobile_telephone_number','length','is'=>11,'message'=>'请输入正确的手机号码'),
             array('qq_number','length','min'=>5,'max'=>12,'tooShort'=>'哪有这么短的QQ','tooLong'=>'哪有这么长的QQ'),
             array('age','numerical','integerOnly'=>true,'max'=>70,'min'=>18,'tooBig'=>'年龄太大','tooSmall'=>'不用童工'),
@@ -110,7 +110,7 @@ class TalentInfo extends CActiveRecord
         $criteria->select=' * ';
         $criteria->addNotInCondition('status',[1,2,3,4,5]);
         $criteria->with=array('options','departments');
-        $criteria->order='update_time asc';
+        $criteria->order='update_time desc';
         $this->doIsIntern($criteria);//如果是实习生只能看自己的
         $criteria->compare('name',$this->name,true);
         $criteria->compare('age',$this->age,true);
@@ -200,7 +200,7 @@ class TalentInfo extends CActiveRecord
         $criteria=new CDbCriteria(array(
             'condition'=>'('.$condition_is.')and('.$condition_rlike.')and('.$condition_ext.')',
             'params'=>array(':is'=>"^$keyword$",':like'=>"%$keyword%"),
-            'order'=>'update_time asc',
+            'order'=>'update_time desc',
         ));
         $criteria->addNotInCondition('status',[1,2,3,4,5]);
         return $dataProvider=new CActiveDataProvider('TalentInfo',array(
