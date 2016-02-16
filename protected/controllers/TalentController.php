@@ -4,7 +4,7 @@ class TalentController extends Controller
 {
 	public $layout='//layouts/column1';
 	public $keyword;
-    public $cell_colors=['26'=>['fill'=>'FFFFC7CE','font'=>'FF9C0006'],'68'=>['fill'=>'FFC6EFCE','font'=>'FF006100']];
+    public $cell_colors=['25'=>['fill'=>'FFBDD7EE','font'=>'FF2F7585'],'26'=>['fill'=>'FFFFC7CE','font'=>'FF9C0006'],'68'=>['fill'=>'FFC6EFCE','font'=>'FF006100']];
 
     public function accessRules()
     {
@@ -77,10 +77,13 @@ class TalentController extends Controller
         $models=TalentInfo::model()->findAll($criteria);
         $activeSheet->setCellValue('U2','张微');
         $activeSheet->setCellValue('U3','那子卓');
+        $activeSheet->setCellValue('U4','张敏');
         $color=$this->getColorById("26");
         $this-> setCellColor($activeSheet,'V2',$color);
         $color=$this->getColorById("68");
         $this-> setCellColor($activeSheet,'V3',$color);
+        $color=$this->getColorById("25");
+        $this-> setCellColor($activeSheet,'V4',$color);
 
 
         $activeSheet->setCellValue('A1','部门');
