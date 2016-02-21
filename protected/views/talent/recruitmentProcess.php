@@ -67,6 +67,19 @@ $box = $this->beginWidget(
                 'context'=>'info',
                 'size' => 'small'
             ),
+            array(
+                'class' => 'booster.widgets.TbButton',
+                'label' => '只看自己',
+                'buttonType'=>'submitLink',
+                'url'=>'',
+                'visible'=>in_array(Yii::app()->user->isAdmin(),[1,3]),
+                'htmlOptions'=>array(
+                    'href' => $this->createUrl('recruitmentProcess',array('onlyself'=>$onlyself*-1)),
+                    'style'=>'margin-right: 20px;'.($onlyself==-1?'':'background:gainsboro;'),
+                ),
+                'context'=>'info',
+                'size' => 'small'
+            ),
         ),
         'headerHtmlOptions'=>array(),
         'contentHtmlOptions'=>array('align'=>'center','style'=>' overflow:auto; '),
@@ -76,15 +89,16 @@ $box = $this->beginWidget(
 $this->widget('booster.widgets.TbGridView', array(
     'enableSorting'=>false,
     'id'=>'user-info-grid',
-    'dataProvider'=>$model->inProcess(30),
+    'dataProvider'=>$model->inProcess(30,$onlyself),
     'htmlOptions'=>array('style'=>''),
+    'filter'=>$model,
     'columns'=>array(
         array('name'=>'departments.department','htmlOptions'=>array('style'=>'vertical-align: middle;width:6%')),
         array('name'=>'position','htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'width:7%','class'=>'col-sm-1'),),
         array('name'=>'name','type'=>'raw','htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'width:5%','class'=>'col-sm-1'),'value'=>array($this,'getUserUrl')),
-        array('name'=>'create_datetime','type'=>'raw','htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'width:128px;','class'=>''),'value'=>'date("m-d H:i",strtotime($data->update_time))'),
+        array('name'=>'create_datetime','filter'=>'&nbsp','type'=>'raw','htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'width:128px;','class'=>''),'value'=>'date("m-d H:i",strtotime($data->update_time))'),
         //这里注意，在type=raw时如果value是字符串则直接返回，如果是数组则调用类中的函数，可以查看yiilite.php的evaluateExpression
-        array('header'=>'招聘进度','name'=>'recruitmentProcess','value'=>array($this,'getRecruitmentProcess'),'htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'','class'=>'col-sm-5'),),
+        array('header'=>'招聘进度','filter'=>'&nbsp','name'=>'recruitmentProcess','value'=>array($this,'getRecruitmentProcess'),'htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'','class'=>'col-sm-5'),),
         array('header'=>'下一操作','type'=>'raw','headerHtmlOptions'=>array('style'=>'','class'=>'col-sm-4'),'value'=>array($this,'getRecruitmentNextProcess')),
     ),
 ));

@@ -36,13 +36,16 @@ class TalentInfo extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+            array('qq_number,email,mobile_telephone_number,','filter', 'filter' => 'trim'),
 			array('name,age,work_age,gender,recruitment_type,way,mobile_telephone_number,email,department_id,position','required','message'=>'{attribute}不能为空'),
             array('email','email'),
             array('mobile_telephone_number,qq_number','unique','message'=>'存在同号的人'),
             array('mobile_telephone_number','length','is'=>11,'message'=>'请输入正确的手机号码'),
-            array('qq_number','length','min'=>5,'max'=>12,'tooShort'=>'哪有这么短的QQ','tooLong'=>'哪有这么长的QQ'),
+            array('qq_number','length','min'=>5,'max'=>12,'tooShort'=>'哪有这么短的QQ','tooLong'=>'哪有这么长的QQ',),
             array('age','numerical','integerOnly'=>true,'max'=>70,'min'=>18,'tooBig'=>'年龄太大','tooSmall'=>'不用童工'),
-			array('vocational_certificate,status,experience_education,experience_work,experience_project,remarks,recruitment_source,marriage,invite_datetime,create_user_id','safe'),
+            array('mobile_telephone_number,qq_number','numerical','integerOnly'=>true,'message'=>'只接受数字'),
+			array('invite_user_id,vocational_certificate,status,experience_education,experience_work,experience_project,remarks,recruitment_source,marriage,invite_datetime,create_user_id','safe'),
+
 		);
 	}
     public function relations()
@@ -105,7 +108,7 @@ class TalentInfo extends CActiveRecord
         ));
     }
     //查找所有未邀请的人和已经离职的人和终止面试的人
-    public function notInProcess($pageSize=20){
+    public function notInProcess($pageSize=20,$onlyself=0){
         $criteria=new CDbCriteria;
         $criteria->select=' * ';
         $criteria->addNotInCondition('status',[1,2,3,4,5]);
@@ -130,6 +133,9 @@ class TalentInfo extends CActiveRecord
         $criteria->compare('remarks',$this->remarks,true);
 
         $criteria->compare('position',$this->position,true);
+        if($onlyself==1){
+            $this->lookOnlySelf($criteria);
+        }
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
             'pagination'=>array(
@@ -139,7 +145,7 @@ class TalentInfo extends CActiveRecord
     }
 
     //查找所有邀请过的人
-    public function inProcess($pageSize=20){
+    public function inProcess($pageSize=20,$onlyself=0){
         $criteria=new CDbCriteria;
         $criteria->select=' * ';
         $criteria->addInCondition('status',[1,2,3,4,5]);
@@ -164,6 +170,10 @@ class TalentInfo extends CActiveRecord
         $criteria->compare('remarks',$this->remarks,true);
 
         $criteria->compare('position',$this->position,true);
+
+        if($onlyself==1){
+            $this->lookOnlySelf($criteria);
+        }
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
             'pagination'=>array(
@@ -180,7 +190,7 @@ class TalentInfo extends CActiveRecord
         $conditions_is = array();
         $conditions_rlike = array();
         $attributes_is=array('age','work_age','gender','mobile_telephone_number','qq_number','marriage');
-        $attributes_rlike=array('name','email','experience_education','experience_work','vocational_certificate','recruitment_type','recruitment_source','remarks','position');
+        $attributes_rlike=array('name','email','experience_education','experience_work','vocational_certificate','recruitment_type','recruitment_source','remarks','position','departments.department');
         foreach($attributes_is as $index=>$attribute){
             $attr=$this->getAttribute($attribute);
             $conditions_is[] = " $attribute rlike :is ";
@@ -203,6 +213,7 @@ class TalentInfo extends CActiveRecord
             'order'=>'update_time desc',
         ));
         $criteria->addNotInCondition('status',[1,2,3,4,5]);
+        $criteria->with=array('options','departments');
         return $dataProvider=new CActiveDataProvider('TalentInfo',array(
             'criteria'=>$criteria,
             'pagination'=>array(
@@ -247,6 +258,14 @@ class TalentInfo extends CActiveRecord
             if( in_array($user->id,$this::$intern)){
                 $criteria->compare('create_user_id',$user->id);
             }
+        }
+    }
+    public function lookOnlySelf(&$criteria){//选择只看自己录的
+        $user=User::model()->findByAttributes(array('user_name'=>Yii::app()->user->name));
+        if(!empty($user)){
+            $criteria->compare('create_user_id',$user->id);
+        }else{
+            $criteria->compare('create_user_id',0);
         }
     }
     public function isIntern(){//是否实习生

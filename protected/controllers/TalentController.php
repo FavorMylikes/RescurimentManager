@@ -4,7 +4,7 @@ class TalentController extends Controller
 {
 	public $layout='//layouts/column1';
 	public $keyword;
-    public $cell_colors=['25'=>['fill'=>'FFBDD7EE','font'=>'FF2F7585'],'26'=>['fill'=>'FFFFC7CE','font'=>'FF9C0006'],'68'=>['fill'=>'FFC6EFCE','font'=>'FF006100']];
+    public $cell_colors=['9'=>['fill'=>'FFBDD7EE','font'=>'FF2F7585'],'26'=>['fill'=>'FFFFC7CE','font'=>'FF9C0006'],'68'=>['fill'=>'FFC6EFCE','font'=>'FF006100']];
 
     public function accessRules()
     {
@@ -82,7 +82,7 @@ class TalentController extends Controller
         $this-> setCellColor($activeSheet,'V2',$color);
         $color=$this->getColorById("68");
         $this-> setCellColor($activeSheet,'V3',$color);
-        $color=$this->getColorById("25");
+        $color=$this->getColorById("9");
         $this-> setCellColor($activeSheet,'V4',$color);
 
 
@@ -192,6 +192,12 @@ class TalentController extends Controller
     }
 
     public function actionAddTalent(){
+        if(isset($_POST['ajax']) && $_POST['ajax']==='info-form')
+        {
+            $talent_info=new TalentInfo();
+            echo CActiveForm::validate($talent_info);
+            Yii::app()->end();
+        }
         if(isset($_POST['TalentInfo'])){
             $model=new TalentInfo();
             $model->attributes=$_POST['TalentInfo'];
@@ -236,7 +242,7 @@ class TalentController extends Controller
         echo json_encode($result);
     }
 
-    public function actionManager(){
+    public function actionManager($onlyself=-1){
         if(isset($_POST['TalentStatus'])){
             $model=new TalentStatus();
             $model->attributes=$_POST['TalentStatus'];
@@ -262,11 +268,11 @@ class TalentController extends Controller
         $model->unsetAttributes();  // clear any default values
         if(isset($_GET['TalentInfo']))
             $model->attributes=$_GET['TalentInfo'];
-        $dataProvider=$model->notInProcess(30);
-        $this->render('manager', array('dataProvider'=>$dataProvider,'model' => $model));
+        $vdataProvider=$model->notInProcess(30,$onlyself);
+        $this->render('manager', array('dataProvider'=>$vdataProvider,'model' => $model,'onlyself'=>$onlyself));
     }
 
-    public function actionRecruitmentProcess(){
+    public function actionRecruitmentProcess($onlyself=-1){
         if(isset($_POST['TalentStatus'])) {
             $model = new TalentStatus();
             $model->attributes = $_POST['TalentStatus'];
@@ -292,9 +298,20 @@ class TalentController extends Controller
                 }
             }
         }
-        $this->render('recruitmentProcess', array('model' => TalentInfo::model()));
+        //下面四行是搜索用的
+        $model=new TalentInfo('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['TalentInfo']))
+            $model->attributes=$_GET['TalentInfo'];
+        $this->render('recruitmentProcess', array('model' =>$model ,'onlyself'=>$onlyself));
     }
     public function actionInformation($id){
+        if(isset($_POST['ajax']) && $_POST['ajax']==='info-form')
+        {
+            $talent_info=new TalentInfo();
+            echo CActiveForm::validate($talent_info);
+            Yii::app()->end();
+        }
         if(isset($_POST['TalentInfo'])){
             $model=TalentInfo::model()->findByPk($id);
             $model->attributes=$_POST['TalentInfo'];
@@ -335,14 +352,14 @@ class TalentController extends Controller
 
     }
 
-	public function actionSearch($keyword='',$w=array()){
+	public function actionSearch($keyword='',$onlyself=-1){
         $this->keyword=$keyword;
         $model=new TalentInfo('search');
         $model->unsetAttributes();  // clear any default values
         if(isset($_GET['TalentInfo']))
             $model->attributes=$_GET['TalentInfo'];
         $dataProvider=$model->search(30,$keyword);
-		$this->render('manager',array('dataProvider'=>$dataProvider,'model'=>$model));
+		$this->render('manager',array('dataProvider'=>$dataProvider,'model'=>$model,'onlyself'=>$onlyself));
 	}
 
 	public function actionUpdate(){
@@ -390,13 +407,19 @@ class TalentController extends Controller
         $talent_info=TalentInfo::model()->findByPk($id);
         $talent_info->status=1;
         $talent_info->invite_datetime=date('Y-m-d h:i:s');
+        $invite_user=User::model()->findByAttributes(array('user_name'=>Yii::app()->user->name));
+        if(!empty($invite_user)){
+            $talent_info->invite_user_id=$invite_user->id;
+        }else{
+            $talent_info->invite_user_id=0;
+        }
         if($talent_info->save()) {
             TalentStatus::model()->deleteAllByAttributes(['talent_id'=>$id]);
             $talent_status = new TalentStatus();
             $talent_status->talent_id = $id;
             $talent_status->status=1;
             $talent_status->unsetAttributes(['update_time']);
-            $invite_user=User::model()->findByAttributes(array('user_name'=>Yii::app()->user->name));
+
             if(!empty($invite_user)){
                 $talent_status->opt_user_id=$invite_user->id;
             }else{
@@ -426,7 +449,7 @@ class TalentController extends Controller
     //返回个人信息主页
     public function getUserUrl($data){
         $url=$this->createUrl('information',array("id"=>$data->id));
-        return CHtml::link($data->name,$url);
+        return CHtml::link($data->name,$url,array('data-toggle'=>"tooltip",'data-placement'=>"top",'title'=>$data->remarks));
     }
     public function getRecruitmentProcess($data){
         $talent_id=$data->id;
@@ -460,7 +483,7 @@ class TalentController extends Controller
             $model=TalentStatus::model();
         }
         $this->renderPartial('_call_stop_form',array('data'=>$data,'model'=>$model));
-        return '';//这里是为了防止出现默认的空格
+        return '';//这里是为了防止出现默认的空格，如果返回点啥，表格会认为这里应该有个空格，你render之后又给你加个空格就不好了
     }
     public function getRecruitmentNextProcess($data){
         $status=$data->status;
@@ -468,7 +491,7 @@ class TalentController extends Controller
         $raw=$model->with('options')->findByAttributes(array('id'=>$status));
         $next_opt=$raw->getRelated('options');
         $this->renderPartial('_carousel_form',array('data'=>$data,'next_option'=>$next_opt,'model'=>TalentStatus::model()));
-        return '';//这里是为了防止出现默认的空格
+        return '';//这里是为了防止出现默认的空格,如果不返回
     }
     public function getColorById($id){
         if(!empty($this->cell_colors["$id"])){

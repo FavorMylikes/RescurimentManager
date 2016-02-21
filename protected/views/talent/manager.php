@@ -8,6 +8,9 @@
 ?>
 
 <?php
+if(!isset($onlyself)){
+    $onlyself=-1;
+}
 $box = $this->beginWidget(
     'booster.widgets.TbPanel',
     array(
@@ -17,7 +20,22 @@ $box = $this->beginWidget(
         'headerIcon' => 'user',
         'headerHtmlOptions'=>array(),
         'contentHtmlOptions'=>array('align'=>'center','style'=>' overflow:auto; '),
-        'htmlOptions' => array('class' => 'bootstrap-widget-table','style'=>' overflow:auto; ')
+        'htmlOptions' => array('class' => 'bootstrap-widget-table','style'=>' overflow:auto; '),
+        'headerButtons'=>array(
+            array(
+                'class' => 'booster.widgets.TbButton',
+                'label' => '只看自己',
+                'buttonType'=>'submitLink',
+                'url'=>'',
+                'visible'=>in_array(Yii::app()->user->isAdmin(),[1,3]),
+                'htmlOptions'=>array(
+                    'href' => $this->createUrl($this->getAction()->getId(),array('onlyself'=>$onlyself*-1)),
+                    'style'=>$onlyself==-1?'':'background:gainsboro;',
+                ),
+                'context'=>'info',
+                'size' => 'small'
+            ),
+        ),
     )
 );
 $this->widget('booster.widgets.TbGridView', array(

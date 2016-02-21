@@ -20,7 +20,8 @@ return array(
 		'application.models.*',
 		'application.components.*',
         'booster.*',
-		'ext.PHPExcel.*'
+		'ext.PHPExcel.*',
+		'ext.yii-mail.YiiMailMessage'
 	),
     'aliases'=>array(
         'booster' =>  'application.extensions.booster',
@@ -46,8 +47,7 @@ return array(
 			'class'=>'RWebUser',
 			'allowAutoLogin'=>true,
 		),
-		// uncomment the following to enable URLs in path-format
-
+		// uncomment the following to enable URLs in path-format//重定向规则
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName'=>false,
@@ -57,7 +57,18 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
-
+		//Set mail sender config//发送邮件的
+		'mail' => array(
+			'class' => 'ext.yii-mail.YiiMail',
+			'transportType'=>'smtp',
+			'transportOptions'=>array(
+				'host'=>'smtp.163.com',
+				'username'=>'favormylikes@163.com',
+				'password'=>'l786112323',
+				'port'=>'25',
+			),
+			'viewPath' => 'application.views.mail',
+		),
         'bootstrap' =>  array(
             'class' =>  'booster.components.Booster',
         ),

@@ -12,7 +12,7 @@ $form = $this->beginWidget(
     'booster.widgets.TbActiveForm',
     array(
         'id' => 'info-form',
-        'enableClientValidation'=>true,
+        'enableAjaxValidation'=>true,
         'type' => 'horizontal',
         'htmlOptions' => array('class' => 'well'),
     )
