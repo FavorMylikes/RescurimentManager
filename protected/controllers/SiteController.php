@@ -57,6 +57,16 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
+		$message            = new YiiMailMessage;
+		//this points to the file test.php inside the view path
+		$message->view = "login";
+		$params              = array('name'=>'favormylikes@163.com');
+		$message->subject    = 'My TestSubject';
+		$message->setBody($params, 'text/html');
+		$message->addTo('786112323@qq.com');
+		$message->from = 'favormylikes@163.com';
+		Yii::app()->mail->send($message);
+
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 		$login_model=new LoginForm;

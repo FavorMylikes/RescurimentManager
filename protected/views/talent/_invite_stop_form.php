@@ -20,7 +20,8 @@ $form = $this->beginWidget(
 echo $form->hiddenField($model, 'talent_id', array('value' => $data->id));
 echo $form->hiddenField($model, 'next_option_id', array('value' => 8));
 if (in_array($next_option->id, [1,2,3,4,5])) {
-    echo $form->select2Group($model, 'opt_details', array('groupOptions' => array('class' => '', 'style' => 'width:70%;margin-left:15px;'), 'widgetOptions' => array('data' => OptionsDetails::model()->getDetails($data->getRelated('options')->opt_category), 'htmlOptions' => array('style' => 'width:100%;min-width:0px;', 'id' => 's2id_OptionsDetails_middleman' . $data->id), 'asDropDownList' => true, 'options' => array('maximumSelectionSize' => 1, 'placeholder' => '拒绝缘由',))));
+    echo $form->dropDownListGroup($model,  'opt_details', array('groupOptions' => array('class' => '', 'style' => 'width:70%;margin-left:15px;'), 'widgetOptions' => array('data' => OptionsDetails::model()->getDetails($data->getRelated('options')->opt_category), 'htmlOptions' => array('class'=>'s2id_OptionsDetails_middleman','style' => 'width:100%;min-width:0px;', 'id' => 's2id_OptionsDetails_middleman' . $data->id))));
+    //echo $form->select2Group($model, 'opt_details', array('groupOptions' => array('class' => '', 'style' => 'width:70%;margin-left:15px;'), 'widgetOptions' => array('data' => OptionsDetails::model()->getDetails($data->getRelated('options')->opt_category), 'htmlOptions' => array('style' => 'width:100%;min-width:0px;', 'id' => 's2id_OptionsDetails_middleman' . $data->id), 'asDropDownList' => true, 'options' => array('maximumSelectionSize' => 1, 'placeholder' => '拒绝缘由',))));
 }else{
     echo $form->hiddenField($model, 'opt_details', array('value' => ''));
 }

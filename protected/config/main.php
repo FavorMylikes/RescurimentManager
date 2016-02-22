@@ -64,7 +64,7 @@ return array(
 			'transportOptions'=>array(
 				'host'=>'smtp.163.com',
 				'username'=>'favormylikes@163.com',
-				'password'=>'l786112323',
+				'password'=>'786112323',
 				'port'=>'25',
 			),
 			'viewPath' => 'application.views.mail',

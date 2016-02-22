@@ -14536,3 +14536,118 @@ in F:\workspace_code\php\RescruitmentManager\index.php (13)
 2016/02/20 21:25:07 [trace] [system.db.CDbCommand] Querying SQL: SELECT 1 FROM `ty_talent_info` `t` WHERE `t`.`qq_number`=:ycp0 LIMIT 1
 in F:\workspace_code\php\RescruitmentManager\protected\controllers\TalentController.php (198)
 in F:\workspace_code\php\RescruitmentManager\index.php (13)
+2016/02/21 18:03:54 [error] [exception.Swift_RfcComplianceException] exception 'Swift_RfcComplianceException' with message 'Address in mailbox given [李慧斌] does not comply with RFC 2822, 3.6.2.' in F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\Headers\MailboxHeader.php:309
+Stack trace:
+#0 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\Headers\MailboxHeader.php(239): Swift_Mime_Headers_MailboxHeader->_assertValidAddress('\xE6\x9D\x8E\xE6\x85\xA7\xE6\x96\x8C')
+#1 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\Headers\MailboxHeader.php(97): Swift_Mime_Headers_MailboxHeader->normalizeMailboxes(Array)
+#2 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\Headers\MailboxHeader.php(61): Swift_Mime_Headers_MailboxHeader->setNameAddresses(Array)
+#3 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\SimpleMimeEntity.php(571): Swift_Mime_Headers_MailboxHeader->setFieldBodyModel(Array)
+#4 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\SimpleMessage.php(199): Swift_Mime_SimpleMimeEntity->_setHeaderFieldModel('From', Array)
+#5 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\YiiMailMessage.php(78): Swift_Mime_SimpleMessage->setFrom('\xE6\x9D\x8E\xE6\x85\xA7\xE6\x96\x8C')
+#6 F:\workspace_code\php\RescruitmentManager\protected\controllers\SiteController.php(67): YiiMailMessage->__set('from', '\xE6\x9D\x8E\xE6\x85\xA7\xE6\x96\x8C')
+#7 F:\workspace_code\php\RescruitmentManager\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#8 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#9 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#10 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#11 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#12 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#13 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#14 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(291): CFilterChain->run()
+#15 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#16 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CWebApplication.php(282): CController->run('')
+#17 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#18 F:\workspace_code\php\RescruitmentManager\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#19 F:\workspace_code\php\RescruitmentManager\index.php(13): CApplication->run()
+#20 {main}
+REQUEST_URI=/php/RescruitmentManager/
+---
+2016/02/21 18:04:26 [error] [exception.Swift_RfcComplianceException] exception 'Swift_RfcComplianceException' with message 'Address in mailbox given [favormylikes@@163.com] does not comply with RFC 2822, 3.6.2.' in F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\Headers\MailboxHeader.php:309
+Stack trace:
+#0 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\Headers\MailboxHeader.php(239): Swift_Mime_Headers_MailboxHeader->_assertValidAddress('favormylikes@@1...')
+#1 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\Headers\MailboxHeader.php(97): Swift_Mime_Headers_MailboxHeader->normalizeMailboxes(Array)
+#2 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\Headers\MailboxHeader.php(61): Swift_Mime_Headers_MailboxHeader->setNameAddresses(Array)
+#3 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\SimpleMimeEntity.php(571): Swift_Mime_Headers_MailboxHeader->setFieldBodyModel(Array)
+#4 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mime\SimpleMessage.php(199): Swift_Mime_SimpleMimeEntity->_setHeaderFieldModel('From', Array)
+#5 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\YiiMailMessage.php(78): Swift_Mime_SimpleMessage->setFrom('favormylikes@@1...')
+#6 F:\workspace_code\php\RescruitmentManager\protected\controllers\SiteController.php(67): YiiMailMessage->__set('from', 'favormylikes@@1...')
+#7 F:\workspace_code\php\RescruitmentManager\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#8 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#9 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#10 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#11 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#12 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#13 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#14 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(291): CFilterChain->run()
+#15 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#16 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CWebApplication.php(282): CController->run('')
+#17 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#18 F:\workspace_code\php\RescruitmentManager\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#19 F:\workspace_code\php\RescruitmentManager\index.php(13): CApplication->run()
+#20 {main}
+REQUEST_URI=/php/RescruitmentManager/
+---
+2016/02/21 18:04:37 [error] [php] Undefined property: Swift_Transport_StreamBuffer::$_sequence (F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Transport\StreamBuffer.php:211)
+Stack trace:
+#0 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Transport\AbstractSmtpTransport.php(284): Swift_Transport_StreamBuffer->write()
+#1 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Transport\EsmtpTransport.php(197): Swift_SmtpTransport->executeCommand()
+#2 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Transport\EsmtpTransport.php(241): Swift_SmtpTransport->executeCommand()
+#3 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Transport\AbstractSmtpTransport.php(108): Swift_SmtpTransport->_doHeloCommand()
+#4 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mailer.php(74): Swift_SmtpTransport->start()
+#5 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\YiiMail.php(133): Swift_Mailer->send()
+#6 F:\workspace_code\php\RescruitmentManager\protected\controllers\SiteController.php(68): YiiMail->send()
+#7 F:\workspace_code\php\RescruitmentManager\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#8 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#9 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilterChain.php(133): SiteController->runAction()
+#10 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#11 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#12 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CInlineFilter.php(58): SiteController->filterAccessControl()
+#13 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#14 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(291): CFilterChain->run()
+#15 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#16 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#17 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#18 F:\workspace_code\php\RescruitmentManager\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#19 F:\workspace_code\php\RescruitmentManager\index.php(13): CWebApplication->run()
+REQUEST_URI=/php/RescruitmentManager/
+in F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Transport\StreamBuffer.php (211)
+in F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\ByteStream\AbstractFilterableInputStream.php (168)
+in F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\ByteStream\AbstractFilterableInputStream.php (84)
+2016/02/21 18:08:17 [error] [exception.Swift_TransportException] exception 'Swift_TransportException' with message 'Failed to authenticate on SMTP server with username "favormylikes@163.com" using 2 possible authenticators' in F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Transport\Esmtp\AuthHandler.php:179
+Stack trace:
+#0 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Transport\EsmtpTransport.php(252): Swift_Transport_Esmtp_AuthHandler->afterEhlo(Object(Swift_SmtpTransport))
+#1 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Transport\AbstractSmtpTransport.php(108): Swift_Transport_EsmtpTransport->_doHeloCommand()
+#2 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\vendors\swiftMailer\classes\Swift\Mailer.php(74): Swift_Transport_AbstractSmtpTransport->start()
+#3 F:\workspace_code\php\RescruitmentManager\protected\extensions\yii-mail\YiiMail.php(133): Swift_Mailer->send(Object(Swift_Message), Array)
+#4 F:\workspace_code\php\RescruitmentManager\protected\controllers\SiteController.php(68): YiiMail->send(Object(YiiMailMessage))
+#5 F:\workspace_code\php\RescruitmentManager\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#6 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#7 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#8 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#9 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#10 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#11 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#12 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(291): CFilterChain->run()
+#13 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#14 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CWebApplication.php(282): CController->run('')
+#15 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#16 F:\workspace_code\php\RescruitmentManager\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#17 F:\workspace_code\php\RescruitmentManager\index.php(13): CApplication->run()
+#18 {main}
+REQUEST_URI=/php/RescruitmentManager/
+---
+2016/02/22 12:26:08 [error] [exception.CHttpException.403] exception 'CHttpException' with message '您未被授权执行这个动作' in F:\workspace_code\php\RescruitmentManager\yii\framework\web\auth\CAccessControlFilter.php:182
+Stack trace:
+#0 F:\workspace_code\php\RescruitmentManager\yii\framework\web\auth\CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(RWebUser), '\xE6\x82\xA8\xE6\x9C\xAA\xE8\xA2\xAB\xE6\x8E\x88\xE6\x9D\x83...')
+#1 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 F:\workspace_code\php\RescruitmentManager\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CWebApplication.php(282): CController->run('manager')
+#8 F:\workspace_code\php\RescruitmentManager\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('talent/manager')
+#9 F:\workspace_code\php\RescruitmentManager\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#10 F:\workspace_code\php\RescruitmentManager\index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/php/RescruitmentManager/talent/manager
+---

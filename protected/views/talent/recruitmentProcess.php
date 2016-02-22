@@ -47,6 +47,8 @@
         }
     </style>
 <?php
+Booster::getBooster()->registerPackage('datetimepicker');
+Booster::getBooster()->registerPackage('select2');
 $box = $this->beginWidget(
     'booster.widgets.TbPanel',
     array(
@@ -92,6 +94,18 @@ $this->widget('booster.widgets.TbGridView', array(
     'dataProvider'=>$model->inProcess(30,$onlyself),
     'htmlOptions'=>array('style'=>''),
     'filter'=>$model,
+    'afterAjaxUpdate'=>'
+    function() {
+            jQuery(\'.popover\').remove();
+			jQuery(\'[data-toggle=popover]\').popover();
+			jQuery(\'.tooltip\').remove();
+			jQuery(\'[data-toggle=tooltip]\').tooltip();
+			jQuery(\'.TalentStatus_setup_datetime\').datetimepicker({\'language\':\'zh-CN\',\'format\':\'yyyy-mm-dd hh:ii\',\'startDate\':\'-0d -2w\',\'endDate\':\'+1m\',\'todayHighlight\':true,\'minuteStep\':30,\'startView\':2,\'minViewMode\':1,\'autoclose\':true});
+			jQuery(\'.s2id_TalentStatus_middleman\').select2({\'maximumSelectionSize\':1,\'placeholder\':\'面试人\',\'width\':\'resolve\'});
+			jQuery(\'.s2id_OptionsDetails_middleman\').select2({\'maximumSelectionSize\':1,\'placeholder\':\'拒绝缘由\',\'width\':\'resolve\'});
+			jQuery(\'.carousel-invite-form\').carousel(\'pause\');
+		}
+    ',
     'columns'=>array(
         array('name'=>'departments.department','htmlOptions'=>array('style'=>'vertical-align: middle;width:6%')),
         array('name'=>'position','htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'width:7%','class'=>'col-sm-1'),),
@@ -103,3 +117,9 @@ $this->widget('booster.widgets.TbGridView', array(
     ),
 ));
 $this->endWidget();?>
+<script type="text/javascript">
+    jQuery('.TalentStatus_setup_datetime').datetimepicker({'language':'zh-CN','format':'yyyy-mm-dd hh:ii','startDate':'-0d -2w','endDate':'+1m','todayHighlight':true,'minuteStep':30,'startView':2,'minViewMode':1,'autoclose':true});
+    jQuery('.s2id_TalentStatus_middleman').select2({'maximumSelectionSize':1,'placeholder':'面试人','width':'resolve'});
+    jQuery('.s2id_OptionsDetails_middleman').select2({'maximumSelectionSize':1,'placeholder':'拒绝缘由','width':'resolve'});
+    jQuery('.carousel-invite-form').carousel('pause');
+</script>

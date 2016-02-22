@@ -19,7 +19,7 @@ $form = $this->beginWidget(
 );
 ?><?php
 echo $form->hiddenField($model, 'talent_id', array('value' => $data->id));
-echo $form->select2Group($model, 'opt_details', array('groupOptions' => array(), 'widgetOptions' => array( 'data'=>OptionsDetails::model()->getDetails(3),'htmlOptions' => array('style' => 'min-width:0px;width:100px;', 'id' => 's2id_OptionsDetails_CallStop' . $data->id), 'asDropDownList' => true, 'options' => array('style'=>'width:100%','maximumSelectionSize' => 1, 'placeholder' => '原因',))));
+echo $form->select2Group($model, 'opt_details', array('groupOptions' => array(), 'widgetOptions' => array( 'data'=>OptionsDetails::model()->getDetails(3),'htmlOptions' => array('class'=>'s2id_OptionsDetails_CallStop','style' => 'min-width:0px;width:100px;', 'id' => 's2id_OptionsDetails_CallStop' . $data->id), 'asDropDownList' => true, 'options' => array('style'=>'width:100%','maximumSelectionSize' => 1, 'placeholder' => '原因',))));
 ?>
 <?php
 $this->endWidget();

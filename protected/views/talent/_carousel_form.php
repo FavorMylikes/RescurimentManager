@@ -7,13 +7,13 @@
  */?>
 <?php
 $id='carousel_'.$data->id;
-$cs = Yii::app()->getClientScript();
-$options=array('interval'=>false);
-$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
-$cs->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').carousel('pause');");
+//$cs = Yii::app()->getClientScript();
+//$options=array('interval'=>false);
+//$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
+//$cs->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').carousel('pause');");
 ?>
 
-<div id=<?php echo $id; ?> class="carousel slide">
+<div id=<?php echo $id; ?> class="carousel slide carousel-invite-form">
     <div class="carousel-inner">
         <div class="item active" style="width: 100%;">
             <?php
