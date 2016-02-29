@@ -65,7 +65,7 @@ class SiteController extends Controller
 		$message->setBody($params, 'text/html');
 		$message->addTo('786112323@qq.com');
 		$message->from = 'favormylikes@163.com';
-		Yii::app()->mail->send($message);
+		//Yii::app()->mail->send($message);
 
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'

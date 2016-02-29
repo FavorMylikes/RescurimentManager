@@ -14,9 +14,10 @@ $form = $this->beginWidget(
         'id' => 'info-form',
         'enableAjaxValidation'=>true,
         'type' => 'horizontal',
-        'htmlOptions' => array('class' => 'well'),
+        'htmlOptions' => array('enctype'=>"multipart/form-data",'class' => 'well'),
     )
 );
+$file=CHtml::resolveValue($model,'resume_file');
 ?>
 <fieldset>
     <style type="text/css">.col-sm-5 {
@@ -26,7 +27,35 @@ $form = $this->beginWidget(
             padding-left: 0px;
         }
     </style>
-    <legend>基本信息</legend>
+    <legend>
+        基本信息
+        <?php
+        if(!empty($file=CHtml::resolveValue($model,'resume_file'))){
+            $url=$this->createUrl('download',array('id'=>$model->id));
+            $icon=CHtml::tag('i',array("style"=>"",'class'=>'glyphicon glyphicon-download text-primary'),'',true);
+            echo CHtml::link($icon,$url,array('style'=>'float:right'));
+
+        }
+        ?>
+        <div  class="progress progress-striped active" role="progressbar"  style="display: inline;float:right;">
+
+            <div id="resume-file-bar" class="progress-bar progress-bar-success" style="width: 25%;">
+                <?php echo CHtml::activeLabel($model,'resume_file',array('style'=>'overflow: hidden;width: 100%;color:#000000;','id'=>'file-input-label','for'=>'file-input-button'))?>
+                <?php
+                echo CHtml::activeFileField($model, 'resume_file', array('id'=>'file-input-button','style'=>'visibility: hidden;color:#000000','aria-valuemin'=>0,'aria-valuemax'=>100,'onchange'=>'void function(e){$("#ytfile-input-button").val(e.target.files[0].name);$("#resume-file-bar").width("100%");$("#file-input-label").text("简历文件:"+e.target.files[0].name);}(event)'));
+                ?>
+            </div>
+        </div>
+            <?php
+            if(!empty($file)){
+                ?>
+            <script type="text/javascript">
+                $('#resume-file-bar').width("100%");
+                $('#file-input-label').text("<?php echo "简历文件:$file"?>");
+            </script>
+            <?php }?>
+
+    </legend>
     <div class="row">
         <?php
         //姓名
@@ -91,6 +120,7 @@ $form = $this->beginWidget(
         echo $form->textFieldGroup($model, 'remarks', array('groupOptions'=>array('class'=>'col-sm-6','style'=>'width:49%;float:right'),'labelOptions'=>array('class'=>'col-sm-3'),'wrapperHtmlOptions' => array('class' => 'col-sm-9',), ));
         ?>
     </div>
+
     <legend>工作经历</legend>
     <!--工作经历一-->
     <div class="row">

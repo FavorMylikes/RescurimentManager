@@ -10,7 +10,7 @@ class TalentController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','search','update','contact','recruitmentSource','manager','recruitmentProcessFile','information','recruitmentProcess','certificate','addTalent','departments'),
+				'actions'=>array('download','index','search','update','contact','recruitmentSource','manager','recruitmentProcessFile','information','recruitmentProcess','certificate','addTalent','departments'),
 				'users'=>array('@'),
 				'expression'=>'in_array($user->isAdmin(),[1,3,4])',
 			),
@@ -209,6 +209,17 @@ class TalentController extends Controller
             }else{
                 $model->create_user_id=0;
             }
+            if(!empty($model->resume_file)){
+                $uploadPath = Yii::app()->params['uploadPath'];
+                if(!is_dir($uploadPath))mkdir($uploadPath, 0777, true);
+                $file=CUploadedFile::getInstance( $model, 'resume_file' );
+                $filename = date('Y_m_d',time()).$model->name;
+                $filename .= ".".$file->getExtensionName();
+                $name=iconv("UTF-8","gb2312",$uploadPath.'/'.$filename);
+                $file->saveAs($name,true);
+                chmod($name,0777 );
+                $model->resume_file=$filename;
+            }
             if($model->save()){
                 Yii::app()->user->setFlash('success', '添加成功');
             }else{
@@ -339,6 +350,17 @@ class TalentController extends Controller
                 $model_department_position->position=$position;
                 $model_department_position->save();
             }
+            if(!empty($model->resume_file)){
+                $uploadPath = Yii::app()->params['uploadPath'];
+                if(!is_dir($uploadPath))mkdir($uploadPath, 0777, true);
+                $file=CUploadedFile::getInstance( $model, 'resume_file' );
+                $filename = date('Y_m_d',time()).$model->name;
+                $filename .= ".".$file->getExtensionName();
+                $name=iconv("UTF-8","gb2312",$uploadPath.'/'.$filename);
+                $file->saveAs($name,true);
+                chmod($name,0777 );
+                $model->resume_file=$filename;
+            }
             if($model->save()){
                 Yii::app()->user->setFlash('success', '更改成功');
             }else{
@@ -376,12 +398,36 @@ class TalentController extends Controller
 			$talent_info->attributes=$_POST['TalentInfo'];
 			unset($talent_info->id);
 			if($talent_info->update()){
+                $path = realpath( Yii::app( )->getBasePath( )."/../uploads/resume/" )."/";
+                $file=CUploadedFile::getInstance( $talent_info, 'resume_file' );
+                if(!empty($file)){
+                    $filename = date('Y_m_d',time()).$talent_info->user_name;
+                    $filename .= ".".$file->getExtensionName( );
+                    $file->saveAs($path.$filename);
+                    chmod( $path.$filename, 0777 );
+                }
 				echo 1;
 			}else{
 				echo 0;
 			}
 		}
 	}
+
+    public function actionDownload($id){
+        $model=TalentInfo::model()->findByPk($id);
+        if(!empty($model)){
+            $filename=$model->resume_file;
+            $uploadPath = Yii::app()->params['uploadPath'];
+            $file=iconv("UTF-8","gb2312",$uploadPath.'/'.$filename);
+            if(file_exists($file))
+            {
+                return Yii::app()->getRequest()->sendFile($filename, @file_get_contents($file));
+            }
+        }else{
+            Yii::app()->user->setFlash('error', '文件不存在');
+            $this->render('information', array('model' =>$model));
+        }
+    }
 
 	public function actionContact(){
 		if(isset($_POST['ajax']) && $_POST['ajax']==='contact-form')
@@ -450,6 +496,15 @@ class TalentController extends Controller
     public function getUserUrl($data){
         $url=$this->createUrl('information',array("id"=>$data->id));
         return CHtml::link($data->name,$url,array('data-toggle'=>"tooltip",'data-placement'=>"top",'title'=>$data->remarks));
+    }
+    public function getResumeDownloadUrl($data){
+        if(!empty($data->resume_file)){
+            $url=$this->createUrl('download',array('id'=>$data->id));
+            $icon=CHtml::tag('i',array("style"=>"",'class'=>'glyphicon glyphicon-download text-primary'),'',true);
+            return CHtml::link($icon,$url,array('style'=>'float:right;font-size:large;'));
+        }else{
+            return '';
+        }
     }
     public function getRecruitmentProcess($data){
         $talent_id=$data->id;

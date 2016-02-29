@@ -21,10 +21,12 @@ return array(
 		'application.components.*',
         'booster.*',
 		'ext.PHPExcel.*',
-		'ext.yii-mail.YiiMailMessage'
+		'ext.yii-mail.YiiMailMessage',
+		'xupload.*',
 	),
     'aliases'=>array(
         'booster' =>  'application.extensions.booster',
+		'xupload' => 'ext.xupload',
 		'ext'=>'application.extensions',
     ),
     'language'=>'zh_cn',
@@ -114,5 +116,6 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+		'uploadPath'=>dirname(__FILE__).'/../../uploads/resume',
 	),
 );

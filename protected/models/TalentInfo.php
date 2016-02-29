@@ -45,7 +45,7 @@ class TalentInfo extends CActiveRecord
             array('age','numerical','integerOnly'=>true,'max'=>70,'min'=>18,'tooBig'=>'年龄太大','tooSmall'=>'不用童工'),
             array('mobile_telephone_number,qq_number','numerical','integerOnly'=>true,'message'=>'只接受数字'),
 			array('invite_user_id,vocational_certificate,status,experience_education,experience_work,experience_project,remarks,recruitment_source,marriage,invite_datetime,create_user_id','safe'),
-
+            array('resume_file','file','types'=>'doc,docx,html,txt,pdf','safe'=>true),
 		);
 	}
     public function relations()
@@ -93,6 +93,7 @@ class TalentInfo extends CActiveRecord
             'position'=>'职位',
 
             'reason'=>'邀请不成功的原因',
+            'resume_file'=>'简历文件',
         );
     }
     public function all($pageSize=20){

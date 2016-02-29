@@ -110,10 +110,11 @@ $this->widget('booster.widgets.TbGridView', array(
         array('name'=>'departments.department','htmlOptions'=>array('style'=>'vertical-align: middle;width:6%')),
         array('name'=>'position','htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'width:7%','class'=>'col-sm-1'),),
         array('name'=>'name','type'=>'raw','htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'width:5%','class'=>'col-sm-1'),'value'=>array($this,'getUserUrl')),
-        array('name'=>'create_datetime','filter'=>'&nbsp','type'=>'raw','htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'width:128px;','class'=>''),'value'=>'date("m-d H:i",strtotime($data->update_time))'),
+        array('name'=>'create_datetime','filter'=>'&nbsp','type'=>'raw','htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'width:95px;','class'=>''),'value'=>'date("m-d H:i",strtotime($data->update_time))'),
         //这里注意，在type=raw时如果value是字符串则直接返回，如果是数组则调用类中的函数，可以查看yiilite.php的evaluateExpression
+        array('header'=>'','type'=>'raw','headerHtmlOptions'=>array('style'=>'width=20px;','class'=>''),'htmlOptions'=>array('style'=>'vertical-align: middle;'),'value'=>array($this,'getResumeDownloadUrl')),
         array('header'=>'招聘进度','filter'=>'&nbsp','name'=>'recruitmentProcess','value'=>array($this,'getRecruitmentProcess'),'htmlOptions'=>array('style'=>'vertical-align: middle;'),'headerHtmlOptions'=>array('style'=>'','class'=>'col-sm-5'),),
-        array('header'=>'下一操作','type'=>'raw','headerHtmlOptions'=>array('style'=>'','class'=>'col-sm-4'),'value'=>array($this,'getRecruitmentNextProcess')),
+        array('header'=>'下一操作','type'=>'raw','headerHtmlOptions'=>array('style'=>'','class'=>''),'value'=>array($this,'getRecruitmentNextProcess')),
     ),
 ));
 $this->endWidget();?>
